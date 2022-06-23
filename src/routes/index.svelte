@@ -1,5 +1,6 @@
 <script context="module" lang="ts">
-    export async function load({url, params,fetch}:any) {
+	export const prerender = true;
+	export async function load({url, params, fetch}:any) {
         url = `https://pokeapi.co/api/v2/pokemon?limit=150`;
         const res = await fetch(url);
         const data = await res.json();
@@ -15,35 +16,68 @@
     return {props: { pokemon:loadedPokemon}}
     }
 </script>
+
 <script lang="ts">
-import PokemanCard from "../components/PokemanCard.svelte";
-
-
-
-    export let pokemon:any;
-    
-    let searchTerm = "";
-    let filteredPokemon:any = [];
-
-    $: {
-        if(searchTerm) {
-            //search the pokemon
-            filteredPokemon = pokemon.filter((pokeman:any) => pokeman.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
-        }else {
-            filteredPokemon = [...pokemon]
-        }
-    }
+	import Counter from '$lib/Counter.svelte';
+	export let pokemon:any;
 </script>
 
 <svelte:head>
-    <title>Svelte Kit Pokdex</title>
+	<title>Home</title>
+	<meta name="description" content="Svelte demo app" />
 </svelte:head>
-<h1 class="text-4xl text-center my-8 uppercase">Svelte Kit Pokedex</h1>
 
-<input class="w-full rounded-md text-lg p-4 border-2 border-gray-200 " type="text" bind:value={searchTerm} placeholder="Serach Pokemon">
+<section>
+	<h1>
+		<span class="welcome">
+			<picture>
+				<source srcset="svelte-welcome.webp" type="image/webp" />
+				<img src="svelte-welcome.png" alt="Welcome" />
+			</picture>
+		</span>
 
-<div class="py-4 grid gap-4 md:grid-cols-2 grid-cols-1">
-    {#each filteredPokemon as pokeman}
-        <PokemanCard pokeman={pokeman} />
-    {/each}
-</div>
+		to your new<br />SvelteKit app
+	</h1>
+
+	<h2>
+		try editing <strong>src/routes/index.svelte</strong>
+	</h2>
+
+	<Counter />
+
+		{#each pokemon as pokeman}
+		{pokeman.name}
+		{/each}
+
+
+</section>
+
+<style>
+	section {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		flex: 1;
+	}
+
+	h1 {
+		width: 100%;
+	}
+
+	.welcome {
+		display: block;
+		position: relative;
+		width: 100%;
+		height: 0;
+		padding: 0 0 calc(100% * 495 / 2048) 0;
+	}
+
+	.welcome img {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		display: block;
+	}
+</style>
