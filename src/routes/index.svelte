@@ -16,7 +16,10 @@
     }
 </script>
 <script lang="ts">
-    import PokemanCard from "../components/PokemanCard.svelte";
+import PokemanCard from "src/components/PokemanCard.svelte";
+
+
+
     export let pokemon:any;
     
     let searchTerm = "";
