@@ -16,7 +16,7 @@
     }
 </script>
 <script lang="ts">
-import PokemanCard from "src/components/PokemanCard.svelte";
+import PokemanCard from "../components/PokemanCard.svelte";
 
 
 
